@@ -11,11 +11,15 @@
   "dependencies": {
     "body-parser": "^1.19.2",
     "express": "^4.17.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "uuid": "^8.3.2"
   },
   "prettier": {
     "singleQuote": true,
     "semi": false,
     "trailingComma": "none"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

@@ -2,10 +2,117 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MyFlix</title>
   </head>
   <body>
     <h1>Documentation page</h1>
     <p>A website about my favourite movies & actors</p>
+    <table>
+      <tr>
+        <th>Description</th>
+        <th>URL</th>
+        <th>Request Parameter</th>
+        <th>HTTP Method</th>
+        <th>Response body data format</th>
+        <th>Request body data format</th>
+      </tr>
+      <tr>
+        <td>Returns a list of all movies to the user</td>
+        <td>"/movies"</td>
+        <td>none</td>
+        <td>GET <br> Example: app.get("/movies", (req,res) =>{})</td>
+        <td>
+          A JSON object holding data about all the movies <br />
+          Example: {
+            Title: "Scarface", Description: "",
+          Director: { Name: "Brian De Palma", Bio: "" },
+           Genre: { Name: "Gangster",  Description:""}
+         },
+        </td>
+      </tr>
+      <tr>
+        <td>Returns data about a single movie by title to the user</td>
+        <td>"/movies/:title"</td>
+        <td>:title</td>
+        <td>GET <br> Example: app.get("/movies/:title", (req,res) =>{})</td>
+        <td>
+          A JSON object holding data about a single movie <br />
+          Example: {Title: "Scarface", Description: ""}
+        </td>
+      </tr>
+      <tr>
+        <td>Returns data about a genre by name</td>
+        <td>"/movies/genre/:name"</td>
+        <td>:name</td>
+        <td>GET<br> Example: app.get("/movies/genre/:name", (req,res) =>{})</td>
+        <td>
+          A JSON object holding data about a genre <br />
+          Example: Genre: { Name: "Drama", Description:""}
+        </td>
+      </tr>
+
+      <tr>
+        <td>Returns data about a director by name</td>
+        <td>"/movies/directors/:name"</td>
+        <td>:name</td>
+        <td>GET <br> Example: app.get("/movies/directors/:name", (req,res) =>{})</td>
+        <td>
+          A JSON object holding data about a director <br />
+          Example: Director: { Name: "Martin Scorsese", Bio: "" },
+        </td>
+      </tr>
+
+<tr>
+        <td>Allows new users to register</td>
+        <td>"/users"</td>
+        <td>none</td>
+        <td>POST <br>Example: app.post("/users", (req,res) =>{})</td>
+        <td>
+          A JSON object holding data about new user that was added <br />
+          Example:{
+            id: 1,
+            name: 'Jessica Drake',
+            favouriteMovies: ["Scarface"]
+            },
+        </td>
+        <td>
+          A JSON object is requested  <br />
+          Example: {
+            ID: Integer,
+            name: String,
+            favouriteMovies:array
+          },
+        </td>
+
+      <tr>
+        <td>Allows users to update their user info</td>
+        <td>"/users/:username"</td>
+        <td>:username</td>
+        <td>PUT <br> Example: app.put("/users/:username", (req,res) =>{})</td>
+      </tr>
+      <tr>
+        <td>Allows users to add a movie to their list of favorites</td>
+        <td>"/users/:username/:movieTitle"</td>
+        <td>:username,:movieTitle</td>
+        <td>POST <br> Example: app.post("/users/:username/:movieTitle", (req,res) =>{})</td>
+        <td>A text message indicating that the movie has been added</td>
+      </tr>
+      <tr>
+        <td>Allows users to remove a movie from their list of favorites</td>
+        <td>"/users/:username/:movieTitle"</td>
+        <td>:username,:movieTitle</td>
+        <td>DELETE <br> Example:app.delete("/users/:username/:movieTitle", (req,res) =>{})</td>
+        <td>A text message indicating that the movie has been deleted</td
+      </tr>
+      <tr>
+        <td>Allows existing users to deregister</td>
+        <td>"/users/:username"</td>
+        <td>:username</td>
+        <td>DELETE <br> Example: app.delete("/users/:username", (req,res) =>{})</td>
+        <td>A text message indicating that the user has been deleted</td>
+      </tr>
+    </table>
   </body>
 </html>
