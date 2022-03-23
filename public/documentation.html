@@ -25,11 +25,23 @@
         <td>GET <br> Example: app.get("/movies", (req,res) =>{})</td>
         <td>
           A JSON object holding data about all the movies <br />
-          Example: {
-            Title: "Scarface", Description: "",
-          Director: { Name: "Brian De Palma", Bio: "" },
-           Genre: { Name: "Gangster",  Description:""}
-         },
+          Example:{
+        _id : ObjectId("623646a18a8844ae801a7cfa"),
+        Title : "Silence of the Lambs",
+        Description : "",
+        Genre : {
+                "Name" : "Thriller",
+                "Description" : ""
+        },
+        Director : {
+                "Name" : "Jonathan Demme",
+                "Bio" : " ",
+                "Birth" : "1944",
+                "Death" : "2017"
+        },
+        "ImagePath" : "silenceofthelambs.png",
+        "Featured" : true
+        }
         </td>
       </tr>
       <tr>
@@ -39,7 +51,23 @@
         <td>GET <br> Example: app.get("/movies/:title", (req,res) =>{})</td>
         <td>
           A JSON object holding data about a single movie <br />
-          Example: {Title: "Scarface", Description: ""}
+          Example:{
+          _id : ObjectId("623646a18a8844ae801a7cfa"),
+          Title : "Silence of the Lambs",
+          Description : "",
+          Genre : {
+                "Name" : "Thriller",
+                "Description" : ""
+          },
+          Director : {
+                "Name" : "Jonathan Demme",
+                "Bio" : " ",
+                "Birth" : "1944",
+                "Death" : "2017"
+          },
+          "ImagePath" : "silenceofthelambs.png",
+          "Featured" : true
+          }
         </td>
       </tr>
       <tr>
@@ -60,7 +88,7 @@
         <td>GET <br> Example: app.get("/movies/directors/:name", (req,res) =>{})</td>
         <td>
           A JSON object holding data about a director <br />
-          Example: Director: { Name: "Martin Scorsese", Bio: "" },
+          Example: Director: { Name: "Martin Scorsese", Bio: "", Birth"", Death""},
         </td>
       </tr>
 
@@ -72,17 +100,20 @@
         <td>
           A JSON object holding data about new user that was added <br />
           Example:{
-            id: 1,
-            name: 'Jessica Drake',
-            favouriteMovies: ["Scarface"]
+            Name": "user-User",<br>
+            "Password": "pw-Password",<br>
+            "Email": "user-User@yahoo.co.uk",<br>
+            "Birthday": "1750-06-19",<br>
+            FavoriteMovies:[]<br>
             },
         </td>
         <td>
           A JSON object is requested  <br />
           Example: {
-            ID: Integer,
-            name: String,
-            favouriteMovies:array
+            Name: "req",
+            Password: "req",
+            Email: "req",
+            Birthday: "1750-06-19"
           },
         </td>
 
@@ -91,6 +122,25 @@
         <td>"/users/:username"</td>
         <td>:username</td>
         <td>PUT <br> Example: app.put("/users/:username", (req,res) =>{})</td>
+        <td>
+          A JSON object holding data about new user that was added <br />
+          Example:{
+            Name": "user-User",<br>
+            "Password": "pw-Password",<br>
+            "Email": "user-User@yahoo.co.uk",<br>
+            "Birthday": "1750-06-19",<br>
+            FavoriteMovies:[]<br>
+            },
+        </td>
+        <td>
+          A JSON object is requested  <br />
+          Example: {
+            Name: "req",
+            Password: "req",
+            Email: "req",
+            Birthday: "1750-06-19"
+          },
+        </td>
       </tr>
       <tr>
         <td>Allows users to add a movie to their list of favorites</td>
