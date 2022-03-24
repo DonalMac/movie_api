@@ -15,6 +15,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 uuid = require("uuid");
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport');
 
 app.use(morgan("common"));
 
@@ -30,13 +34,11 @@ app.get("/documentation", (req, res) => {
   res.sendFile("public/documentation.html", { root: __dirname });
 });
 
-
-
 // Gets the list of data about ALL movies 2.8
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
     .then((movies) => {
-      res.status(201).json(movies);
+      res.status(200).json(movies);
     })
     .catch((err) => {
       console.error(err);
@@ -45,11 +47,11 @@ app.get('/movies', (req, res) => {
 });
 
 // Gets the data about a single movie, by title 2.8
-app.get('/movies/:Title', (req, res) => {
+app.get('/movies/:Title',passport.authenticate('jwt', { session: false }), (req, res) => {
 
   Movies.findOne({Title: req.params.Title })
     .then((movie) => {
-      res.json(movie);
+      res.status(200).json(movie);
     })
     .catch((err) => {
       console.error(err);
@@ -58,11 +60,11 @@ app.get('/movies/:Title', (req, res) => {
 });
 
 //Returns data about a genre by name 2.8
-app.get("/movies/genre/:Name", (req,res) => {
+app.get("/movies/genre/:Name",passport.authenticate('jwt', { session: false }), (req,res) => {
 
     Movies.findOne({"Genre.Name": req.params.Name })
       .then((movie) => {
-        res.json(movie.Genre);
+        res.status(200).json(movie.Genre);
       })
       .catch((err) => {
         console.error(err);
@@ -71,18 +73,18 @@ app.get("/movies/genre/:Name", (req,res) => {
   });
 
 //Returns data about a director by name 2.8
-app.get("/movies/director/:Name", (req,res) => {
+app.get("/movies/director/:Name",passport.authenticate('jwt', { session: false }), (req,res) => {
 
       Movies.findOne({"Director.Name": req.params.Name })
         .then((movie) => {
-          res.json(movie.Director);
+          res.status(200).json(movie.Director);
         })
         .catch((err) => {
           console.error(err);
           res.status(500).send('Error: ' + err);
         });
     });
-        
+
 //Allows creation of new user 2.8
 app.post('/users', (req, res) => {
   Users.findOne({ Name: req.body.Name })
@@ -111,7 +113,7 @@ app.post('/users', (req, res) => {
 });
 
 //Allows users to add a movie to their list of favorites 2.8
-app.post("/users/:Name/:movieID", (req,res) =>  {
+app.post("/users/:Name/:movieID",passport.authenticate('jwt', { session: false }), (req,res) =>  {
   Users.findOneAndUpdate({ Name: req.params.Name }, {
      $addToSet: { FavoriteMovies: req.params.movieID }
    },
@@ -121,13 +123,13 @@ app.post("/users/:Name/:movieID", (req,res) =>  {
       console.error(err);
       res.status(500).send('Error: ' + err);
     } else {
-      res.json(updatedUser);
+      res.status(201).json(updatedUser);
     }
   });
 });
 
 //Allows users to update their user info 2.8
-app.put('/users/:Username', (req, res) => {
+app.put('/users/:Username',passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Name: req.params.Username }, { $set:
     {
       Name: req.body.Name,
@@ -142,12 +144,12 @@ app.put('/users/:Username', (req, res) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
     } else {
-      res.json(updatedUser);
+      res.status(201).json(updatedUser);
     }
   });
 });
 //Allows users to delete a movie from their list of favorites 2.8
-app.delete("/users/:Name/:movieID", (req,res) =>  {
+app.delete("/users/:Name/:movieID",passport.authenticate('jwt', { session: false }), (req,res) =>  {
   Users.findOneAndUpdate({ Name: req.params.Name }, {
      $pull: { FavoriteMovies: req.params.movieID }
    },
@@ -157,7 +159,7 @@ app.delete("/users/:Name/:movieID", (req,res) =>  {
       console.error(err);
       res.status(500).send('Error: ' + err);
     } else {
-      res.json(updatedUser);
+      res.status(200).json(updatedUser);
     }
   });
 });
