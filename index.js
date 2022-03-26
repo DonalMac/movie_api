@@ -182,7 +182,7 @@ app.post('/users/:Name/:movieID',
 app.put('/users/:Name',
   passport.authenticate('jwt', { session: false }),
   [ //Validation logic
-  check('Name', 'Username is required').isLength({min: 5}),
+  check('Name', 'Username must be 5 at a minimum characters ').isLength({min: 5}),
   check('Name', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
