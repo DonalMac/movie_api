@@ -4,10 +4,15 @@ const Models = require('./models.js')
 const Movies = Models.Movie
 const Users = Models.User
 
+/*  Local Mongo connection
 mongoose.connect('mongodb://localhost:27017/test', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
+*/
+
+// Mongo to Heroku connect
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express')
 morgan = require('morgan')
