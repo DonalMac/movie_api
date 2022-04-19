@@ -1,0 +1,10 @@
+parcel ../CareerFoundry/myflix-client/src/index.html
+parcel CareerFoundry/myflix-client/src/index.html
+
+Hi Guys,
+I've just started 3.4 and a little stuck already.
+It asks
+"Now, open a terminal window and run your API. Then, run your client application using parcel [path to myFlix-client/src/index.html].
+Could you remind me how to run my API again? and should the parcel path look something like this:
+parcel ../CareerFoundry/myflix-client/src/index.html as I'm navigating to a folder on the same level?
+I've been trying to do this simple command for hours and any help would be appreciated.
