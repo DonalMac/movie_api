@@ -108,7 +108,7 @@ app.get('/movies/director/:Name',
 
 //Get a user by username
 app.get('/users/:Name', (req, res) => {
-  Users.findOne({ name: req.params.Name })
+  Users.findOne({ Name: req.params.Name })
     .then ((user) => {
       res.json(user);
     })
