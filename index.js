@@ -76,6 +76,18 @@ app.get(  '/movies/:Title',
   }
 )
 
+//Get a user by username
+app.get('/users/:Name', (req, res) => {
+  Users.findOne({ Name: req.params.Name })
+    .then (user => {
+      res.json(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
 //Returns data about a genre by name 2.8
 app.get(  '/movies/genre/:Name',
   passport.authenticate('jwt', { session: false }),
@@ -106,17 +118,7 @@ app.get('/movies/director/:Name',
   }
 )
 
-//Get a user by username
-app.get('/users/:Name', (req, res) => {
-  Users.findOne({ Name: req.params.Name })
-    .then ((user) => {
-      res.json(user);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    });
-});
+
 
 //Allows creation of new user 2.8
 app.post( '/users',
