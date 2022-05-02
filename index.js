@@ -12,7 +12,7 @@ mongoose.connect('mongodb://localhost:27017/test', {
 */
 
 // Mongo to Heroku connect
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express')
 morgan = require('morgan')
@@ -48,21 +48,21 @@ app.get('/documentation', (req, res) => {
 })
 
 // Gets the list of data about ALL movies 2.8
-app.get(  '/movies',
+app.get('/movies',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-  Movies.find()
-    .then(function (movies) {
-      res.status(201).json(movies);
-    })
-    .catch(function (error) {
-      console.error(error);
-      res.status(500).send("Error: " + error);
-    });
-});
+    Movies.find()
+      .then(function (movies) {
+        res.status(201).json(movies);
+      })
+      .catch(function (error) {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  });
 
 // Gets the data about a single movie, by title 2.8
-app.get(  '/movies/:Title',
+app.get('/movies/:Title',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Movies.findOne({ Title: req.params.Title })
@@ -79,7 +79,7 @@ app.get(  '/movies/:Title',
 //Get a user by username
 app.get('/users/:Name', (req, res) => {
   Users.findOne({ Name: req.params.Name })
-    .then (user => {
+    .then(user => {
       res.json(user);
     })
     .catch((err) => {
@@ -89,7 +89,7 @@ app.get('/users/:Name', (req, res) => {
 });
 
 //Returns data about a genre by name 2.8
-app.get(  '/movies/genre/:Name',
+app.get('/movies/genre/:Name',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Movies.findOne({ 'Genre.Name': req.params.Name })
@@ -121,7 +121,7 @@ app.get('/movies/director/:Name',
 
 
 //Allows creation of new user 2.8
-app.post( '/users',
+app.post('/users',
   [
     check('Name', 'A Name is required').isLength({ min: 5 }),
     check(
@@ -195,26 +195,27 @@ app.post('/users/:Name/:movieID',
 app.put('/users/:Name',
   passport.authenticate('jwt', { session: false }),
   [ //Validation logic
-  check('Name', 'Username must be 5 at a minimum characters ').isLength({min: 5}),
-  check('Name', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()
-],
+    check('Name', 'Username must be 5 at a minimum characters ').isLength({ min: 5 }),
+    check('Name', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ],
   (req, res) => {
 
     // check the validation object for errors
-let errors = validationResult(req);
+    let errors = validationResult(req);
 
-if (!errors.isEmpty()) {
-  return res.status(422).json({ errors: errors.array() });
-}
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    let hashedPassword = Users.hashPassword(req.body.Password)
 
     Users.findOneAndUpdate(
       { Name: req.params.Name },
       {
         $set: {
           Name: req.body.Name,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         }
@@ -277,6 +278,6 @@ app.use((err, req, res, next) => {
 
 // listen for requests
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0',() => {
- console.log('Listening on Port ' + port);
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on Port ' + port);
 });
